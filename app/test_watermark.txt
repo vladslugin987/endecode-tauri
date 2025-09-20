@@ -1,0 +1,9 @@
+This is a test file for invisible watermark functionality.
+
+ENDEcode testing:
+- Text encoding and decoding
+- Invisible watermark injection
+- Watermark extraction
+- Batch watermark removal
+
+This file will be used to test the new Rust backend functions.
