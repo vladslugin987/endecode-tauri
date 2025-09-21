@@ -10,6 +10,9 @@ import { batchForm } from './ui/batchForm.js';
 import { visibleWatermarkForm } from './ui/visibleWatermarkForm.js';
 import { progressBar } from './ui/progressBar.js';
 import { fileOperations } from './ui/fileOperations.js';
+import { i18n } from './ui/i18n.js';
+import { settingsManager } from './ui/settingsManager.js';
+import { modalManager } from './ui/modalManager.js';
 
 class Application {
   private initialized = false;
@@ -45,8 +48,16 @@ class Application {
     consoleManager.initialize();
     consoleManager.info('Initializing ENDEcode application...');
 
+    // Initialize i18n system first
+    await i18n.initialize();
+    consoleManager.info('Internationalization system loaded');
+
     // Initialize preferences (loads saved settings)
     await preferencesManager.initialize();
+    
+    // Initialize new managers
+    settingsManager.initialize();
+    modalManager.initialize();
     
     // Initialize UI components
     topBar.initialize();
@@ -62,6 +73,9 @@ class Application {
     
     // Set up keyboard shortcuts
     this.setupKeyboardShortcuts();
+
+    // Hide console welcome when user interacts
+    this.setupConsoleWelcomeHiding();
 
     consoleManager.info('All components initialized');
   }
@@ -118,6 +132,28 @@ class Application {
           // TODO: Implement operation cancellation
           consoleManager.warning('Operation cancellation not yet implemented');
         }
+      }
+    });
+  }
+
+  private setupConsoleWelcomeHiding(): void {
+    const welcomeElement = document.getElementById('console-welcome');
+    if (!welcomeElement) return;
+
+    // Hide welcome when user interacts with the app
+    const hideWelcome = () => {
+      if (welcomeElement) {
+        welcomeElement.style.display = 'none';
+      }
+    };
+
+    // Listen for folder selection
+    stateManager.onSelectedPathChanged(hideWelcome);
+    
+    // Listen for any operation start
+    stateManager.onWorkingStatusChanged((isWorking) => {
+      if (isWorking) {
+        hideWelcome();
       }
     });
   }

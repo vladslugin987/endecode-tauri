@@ -1,0 +1,127 @@
+{
+  "app": {
+    "title": "ENDEcode"
+  },
+  "status": {
+    "ready": "Listo",
+    "working": "Trabajando...",
+    "error": "Error"
+  },
+  "workspace": {
+    "title": "Espacio de trabajo",
+    "select_folder": "Seleccionar carpeta"
+  },
+  "quicktest": {
+    "title": "Prueba rápida",
+    "placeholder": "Ingrese texto para probar..."
+  },
+  "operations": {
+    "title": "Operaciones"
+  },
+  "encryption": {
+    "title": "Cifrado",
+    "watermark_placeholder": "Tu marca de agua...",
+    "encrypt": "Cifrar",
+    "decrypt": "Descifrar"
+  },
+  "watermarks": {
+    "title": "Marcas de agua",
+    "remove_all": "Eliminar todas",
+    "settings": "Configuración de marcas de agua..."
+  },
+  "batch": {
+    "title": "Procesamiento por lotes",
+    "setup": "Configurar operación por lotes..."
+  },
+  "console": {
+    "title": "Salida de consola",
+    "auto_clear": "Auto-limpiar",
+    "clear": "Limpiar",
+    "welcome": "👋 ¡Bienvenido a ENDEcode! Selecciona una carpeta para empezar.",
+    "features": {
+      "encrypt": "Cifrar archivos con marcas de agua invisibles",
+      "watermark": "Agregar marcas de agua visibles a imágenes",
+      "batch": "Procesar múltiples archivos a la vez"
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "general": {
+      "title": "General",
+      "language": "Idioma",
+      "language_desc": "Elige tu idioma preferido",
+      "theme": "Tema",
+      "theme_desc": "Apariencia clara u oscura",
+      "theme_system": "Sistema",
+      "theme_light": "Claro",
+      "theme_dark": "Oscuro",
+      "tips": "Mostrar consejos para principiantes",
+      "tips_desc": "Mostrar sugerencias útiles para nuevos usuarios",
+      "auto_clear": "Auto limpiar consola",
+      "auto_clear_desc": "Limpiar automáticamente la consola antes de nuevas operaciones"
+    },
+    "processing": {
+      "title": "Procesamiento de archivos",
+      "default_watermark": "Texto de marca de agua predeterminado",
+      "default_watermark_desc": "Texto a usar cuando el campo de marca de agua esté vacío",
+      "file_types": "Tipos de archivos soportados",
+      "file_types_desc": "Actualmente soportados: txt, jpg, jpeg, png, mp4, avi, mov, mkv"
+    },
+    "advanced": {
+      "title": "Avanzado",
+      "debug": "Modo de depuración",
+      "debug_desc": "Habilitar registro detallado para resolución de problemas",
+      "reset": "Restablecer a valores predeterminados",
+      "reset_desc": "Restaurar todas las configuraciones a sus valores predeterminados",
+      "reset_button": "Restablecer"
+    }
+  },
+  "modals": {
+    "batch": {
+      "title": "Configuración de operación por lotes",
+      "base_text": "Texto base",
+      "base_text_help": "Este será el nombre base para todas las copias. Los números se agregarán automáticamente.",
+      "num_copies": "Número de copias",
+      "start_number": "Número inicial",
+      "options": "Opciones",
+      "number_swap": "Intercambio de números (+10)",
+      "number_swap_help": "Intercambia archivos con números N y N+10",
+      "add_watermark": "Agregar marcas de agua visibles",
+      "add_watermark_help": "Agrega marcas de agua visibles a las imágenes",
+      "create_zip": "Crear archivos ZIP",
+      "create_zip_help": "Empaqueta cada copia en un archivo ZIP",
+      "watermark_text": "Texto de marca de agua",
+      "photo_number": "Número de foto",
+      "execute": "Ejecutar lote"
+    },
+    "watermark": {
+      "title": "Configuración de marcas de agua",
+      "text": "Texto de marca de agua",
+      "photo_number": "Número de foto",
+      "position": "Posición",
+      "position_br": "Abajo derecha",
+      "position_bl": "Abajo izquierda",
+      "position_tr": "Arriba derecha",
+      "position_tl": "Arriba izquierda",
+      "position_c": "Centro",
+      "size": "Tamaño",
+      "size_small": "Pequeño",
+      "size_medium": "Mediano",
+      "size_large": "Grande",
+      "opacity": "Opacidad",
+      "apply": "Aplicar marca de agua"
+    }
+  },
+  "tips": {
+    "select_folder": "👋 ¡Empieza aquí! Elige la carpeta con archivos que quieres proteger con marcas de agua.",
+    "quick_test": "🧪 Prueba cómo se codifica el texto. ¡Intenta escribir \"Hola123\" y ve la magia!",
+    "encryption": "🔒 Añade marcas de agua invisibles para proteger archivos",
+    "advanced": "⚡ Herramientas avanzadas para usuarios expertos"
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "ok": "OK",
+    "save": "Guardar",
+    "close": "Cerrar"
+  }
+}

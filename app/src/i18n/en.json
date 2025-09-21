@@ -1,0 +1,127 @@
+{
+  "app": {
+    "title": "ENDEcode"
+  },
+  "status": {
+    "ready": "Ready",
+    "working": "Working...",
+    "error": "Error"
+  },
+  "workspace": {
+    "title": "Workspace",
+    "select_folder": "Select Folder"
+  },
+  "quicktest": {
+    "title": "Quick Test",
+    "placeholder": "Enter text to test..."
+  },
+  "operations": {
+    "title": "Operations"
+  },
+  "encryption": {
+    "title": "Encryption",
+    "watermark_placeholder": "Your watermark text...",
+    "encrypt": "Encrypt",
+    "decrypt": "Decrypt"
+  },
+  "watermarks": {
+    "title": "Watermarks",
+    "remove_all": "Remove All",
+    "settings": "Watermark Settings..."
+  },
+  "batch": {
+    "title": "Batch Processing",
+    "setup": "Setup Batch Operation..."
+  },
+  "console": {
+    "title": "Console Output",
+    "auto_clear": "Auto-clear",
+    "clear": "Clear",
+    "welcome": "👋 Welcome to ENDEcode! Select a folder to get started.",
+    "features": {
+      "encrypt": "Encrypt files with invisible watermarks",
+      "watermark": "Add visible watermarks to images",
+      "batch": "Process multiple files at once"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "general": {
+      "title": "General",
+      "language": "Language",
+      "language_desc": "Choose your preferred language",
+      "theme": "Theme",
+      "theme_desc": "Light or dark appearance",
+      "theme_system": "System",
+      "theme_light": "Light",
+      "theme_dark": "Dark",
+      "tips": "Show Beginner Tips",
+      "tips_desc": "Display helpful hints for new users",
+      "auto_clear": "Auto Clear Console",
+      "auto_clear_desc": "Automatically clear console before new operations"
+    },
+    "processing": {
+      "title": "File Processing",
+      "default_watermark": "Default Watermark Text",
+      "default_watermark_desc": "Text to use when watermark field is empty",
+      "file_types": "Supported File Types",
+      "file_types_desc": "Currently supported: txt, jpg, jpeg, png, mp4, avi, mov, mkv"
+    },
+    "advanced": {
+      "title": "Advanced",
+      "debug": "Debug Mode",
+      "debug_desc": "Enable detailed logging for troubleshooting",
+      "reset": "Reset to Defaults",
+      "reset_desc": "Restore all settings to their default values",
+      "reset_button": "Reset"
+    }
+  },
+  "modals": {
+    "batch": {
+      "title": "Batch Operation Setup",
+      "base_text": "Base Text",
+      "base_text_help": "This will be the base name for all copies. Numbers will be added automatically.",
+      "num_copies": "Number of Copies",
+      "start_number": "Starting Number",
+      "options": "Options",
+      "number_swap": "Number Swap (+10)",
+      "number_swap_help": "Swaps files with numbers N and N+10",
+      "add_watermark": "Add Visible Watermarks",
+      "add_watermark_help": "Adds visible watermarks to images",
+      "create_zip": "Create ZIP Archives",
+      "create_zip_help": "Packages each copy into a ZIP file",
+      "watermark_text": "Watermark Text",
+      "photo_number": "Photo Number",
+      "execute": "Execute Batch"
+    },
+    "watermark": {
+      "title": "Watermark Settings",
+      "text": "Watermark Text",
+      "photo_number": "Photo Number",
+      "position": "Position",
+      "position_br": "Bottom Right",
+      "position_bl": "Bottom Left",
+      "position_tr": "Top Right",
+      "position_tl": "Top Left",
+      "position_c": "Center",
+      "size": "Size",
+      "size_small": "Small",
+      "size_medium": "Medium",
+      "size_large": "Large",
+      "opacity": "Opacity",
+      "apply": "Apply Watermark"
+    }
+  },
+  "tips": {
+    "select_folder": "👋 Start here! Choose the folder with files you want to protect with watermarks.",
+    "quick_test": "🧪 Test how text gets encoded. Try typing \"Hello123\" and see the magic!",
+    "encryption": "🔒 Add invisible watermarks to protect your files",
+    "advanced": "⚡ Advanced tools for power users"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "ok": "OK",
+    "save": "Save",
+    "close": "Close"
+  }
+}

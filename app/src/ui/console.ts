@@ -46,13 +46,16 @@ class ConsoleManager {
   private renderWelcome(): void {
     if (!this.consoleElement) return;
     
+    const title = 'ENDEcode v2.0';
+    const subtitle = 'Invisible Watermarks';
+    const line = '─'.repeat(53);
     const welcomeHtml = `
       <div class="console-welcome">
         <div class="console-header">
-          ╭─────────────────────────────────────────────╮
-          │                ENDEcode v2.0                │
-          │            Invisible Watermarks             │
-          ╰─────────────────────────────────────────────╯
+          ╭${line}╮
+          │ ${title.padStart((title.length + 38) / 2).padEnd(53)} │
+          │ ${subtitle.padStart((subtitle.length + 40) / 2).padEnd(53)} │
+          ╰${line}╯
         </div>
         <div class="console-info">Ready to process files...</div>
       </div>

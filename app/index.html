@@ -2,6 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/src/styles.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ENDEcode</title>
@@ -12,159 +15,173 @@
     <!-- Top Navigation -->
     <nav class="navbar">
       <div class="nav-brand">
-        <h1 class="app-title">ENDEcode</h1>
+        <h1 class="app-title" data-i18n="app.title">ENDEcode</h1>
         <span class="app-version">v2.0</span>
       </div>
       <div class="nav-controls">
         <div class="status-indicator" id="status-indicator">
           <div class="status-dot"></div>
-          <span class="status-text">Ready</span>
+          <span class="status-text" data-i18n="status.ready">Ready</span>
         </div>
+        <button class="btn-icon" id="settings-btn" aria-label="Settings" title="Open Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-          <!-- Emoji will be injected by topbar.ts -->
+          <!-- Light theme icon (sun) -->
+          <svg class="theme-icon theme-icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <!-- Dark theme icon (moon) -->
+          <svg class="theme-icon theme-icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
         </button>
       </div>
     </nav>
 
     <!-- Main Layout -->
-    <div class="layout">
+    <div class="app-container">
+      <!-- Main App Content -->
+      <div id="main-app" class="app-view active">
+        <div class="layout">
       <!-- Sidebar -->
       <aside class="sidebar">
-        <!-- Source Selection -->
-        <section class="section">
-          <header class="section-header">
-            <h2 class="section-title">Workspace</h2>
-          </header>
-          <div class="section-content">
-            <div class="action-card">
-              <button type="button" class="btn btn-outline" id="select-folder-btn">
-                <svg class="btn-icon" viewBox="0 0 24 24">
-                  <path d="M10 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2h-8l-2-2z"/>
+        <!-- Workspace -->
+        <div class="workspace-section">
+          <div class="section-header-modern">
+            <svg class="section-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            </svg>
+            <h2 class="section-title-modern" data-i18n="workspace.title">Workspace</h2>
+            <div class="help-tooltip" data-tooltip="Select a folder containing files you want to encrypt or process">
+              <svg viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
+            </div>
+          </div>
+          
+          <div class="workspace-content">
+            <button type="button" class="btn-primary-compact" id="select-folder-btn">
+              <svg class="icon-sm" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/>
+              </svg>
+              <span data-i18n="workspace.select_folder">Select Folder</span>
+            </button>
+            
+            <div class="beginner-tip" id="tip-select-folder">
+              <span data-i18n="tips.select_folder">👋 Start here! Choose the folder with files you want to protect with watermarks.</span>
+            </div>
+            
+            <div class="path-display-modern" id="selected-path">
+              <div class="path-value-modern" id="path-value">No folder selected</div>
+              <button type="button" class="btn-modern btn-ghost-modern btn-xs" id="open-folder-btn" disabled>
+                <svg class="icon-xs" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-.5-.5H8.636z"/>
                 </svg>
-                Select Folder
               </button>
-              
-              <div class="path-display" id="selected-path">
-                <div class="path-value" id="path-value">No folder selected</div>
-                <button type="button" class="btn btn-ghost btn-sm" id="open-folder-btn" disabled>
-                  <svg class="btn-icon" viewBox="0 0 24 24">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                    <polyline points="14,2 14,8 20,8"/>
-                    <line x1="16" y1="13" x2="8" y2="13"/>
-                    <line x1="16" y1="17" x2="8" y2="17"/>
-                    <polyline points="10,9 9,9 8,9"/>
-                  </svg>
-                  Show
-                </button>
-              </div>
             </div>
 
             <!-- Quick Test -->
-            <div class="action-card">
-              <h3 class="card-title">Quick Test</h3>
-              <form class="test-form" id="test-form">
-                <div class="input-group">
-                  <input type="text" id="test-input" placeholder="Test encode/decode..." class="input" />
-                  <button type="submit" class="btn btn-primary">Test</button>
+            <div class="quick-test">
+              <div class="section-mini-header">
+                <span data-i18n="quicktest.title">Quick Test</span>
+                <div class="help-tooltip" data-tooltip="Test the encryption algorithm with any text">
+                  <svg viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                  </svg>
                 </div>
-        </form>
+              </div>
+              <form class="test-form-modern" id="test-form">
+                <div class="input-group-modern">
+                  <input type="text" id="test-input" placeholder="Enter text to test..." class="input-modern" data-i18n-placeholder="quicktest.placeholder" />
+                  <button type="submit" class="btn-modern btn-primary-modern btn-xs">
+                    <svg class="icon-xs" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                    </svg>
+                  </button>
+                </div>
+              </form>
+              <div class="beginner-tip" id="tip-quick-test">
+                <span data-i18n="tips.quick_test">🧪 Test how text gets encoded. Try typing "Hello123" and see the magic!</span>
+              </div>
             </div>
           </div>
-      </section>
+        </div>
 
         <!-- Operations -->
-        <section class="section">
-          <header class="section-header">
-            <h2 class="section-title">Operations</h2>
-          </header>
-          <div class="section-content">
-            <!-- Encryption Tools -->
-            <div class="action-card">
-              <h3 class="card-title">File Encryption</h3>
-              <div class="input-group">
-                <input type="text" id="inject-text" placeholder="Watermark text..." class="input" />
-              </div>
-              <div class="btn-group">
-                <button type="button" class="btn btn-primary" id="encrypt-btn" disabled>
-                  Encrypt
-                </button>
-                <button type="button" class="btn btn-secondary" id="decrypt-btn" disabled>
-                  Decrypt
-                </button>
-              </div>
-            </div>
-
-            <!-- Watermark Tools -->
-            <div class="action-card">
-              <h3 class="card-title">Watermarks</h3>
-              
-              <button type="button" class="btn btn-danger" id="remove-watermarks-btn" disabled>
-                Remove All Watermarks
-              </button>
-              
-              <div class="input-row">
-                <div class="input-group">
-                  <label class="label">Visible Text</label>
-                  <input type="text" id="visible-watermark-text" placeholder="Text..." class="input" />
-                </div>
-                <div class="input-group">
-                  <label class="label">Photo #</label>
-                  <input type="number" id="visible-watermark-photo" placeholder="All" class="input" min="1" />
-                </div>
-              </div>
-              <button type="button" class="btn btn-secondary" id="add-visible-watermark-btn" disabled>
-                Apply Visible Watermark
-              </button>
-            </div>
-
-            <!-- Batch Processing -->
-            <div class="action-card">
-              <h3 class="card-title">Batch Processing</h3>
-              <form class="batch-form" id="batch-form">
-                <div class="input-row">
-                  <div class="input-group">
-                    <label class="label">Base Text</label>
-                    <input type="text" id="batch-base-text" placeholder="Project_001" class="input" required />
-                  </div>
-                  <div class="input-group">
-                    <label class="label">Copies</label>
-                    <input type="number" id="batch-num-copies" value="1" min="1" class="input" required />
-                  </div>
-                </div>
-
-                <div class="options-group">
-                  <label class="option">
-                    <input type="checkbox" id="batch-add-swap" class="checkbox" />
-                    <span class="option-text">Number Swap (+10)</span>
-                  </label>
-                  <label class="option">
-                    <input type="checkbox" id="batch-add-watermark" class="checkbox" />
-                    <span class="option-text">Add Watermark</span>
-                  </label>
-                  <label class="option">
-                    <input type="checkbox" id="batch-create-zip" class="checkbox" />
-                    <span class="option-text">Create ZIP</span>
-                  </label>
-                </div>
-
-                <div class="input-row">
-                  <div class="input-group">
-                    <label class="label">Watermark</label>
-                    <input type="text" id="batch-watermark-text" placeholder="Optional" class="input" />
-                  </div>
-                  <div class="input-group">
-                    <label class="label">Photo #</label>
-                    <input type="number" id="batch-photo-number" placeholder="All" class="input" min="1" />
-                  </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary" disabled id="run-batch-btn">
-                  Execute Batch
-                </button>
-              </form>
+        <div class="operations-section">
+          <div class="section-header-modern">
+            <svg class="section-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/>
+            </svg>
+            <h2 class="section-title-modern" data-i18n="operations.title">Operations</h2>
+            <div class="help-tooltip" data-tooltip="Choose what you want to do with your files">
+              <svg viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
             </div>
           </div>
-        </section>
+          
+          <div class="operations-grid-compact">
+            <!-- Quick Actions Row -->
+            <div class="quick-actions">
+              <input type="text" id="inject-text" placeholder="Watermark text..." class="input-compact-main" data-i18n-placeholder="encryption.watermark_placeholder" />
+              <button type="button" class="btn-action" id="encrypt-btn" disabled>
+                <svg class="icon-action" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                </svg>
+                <span data-i18n="encryption.encrypt">Encrypt</span>
+              </button>
+              <button type="button" class="btn-action btn-secondary" id="decrypt-btn" disabled>
+                <svg class="icon-action" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"/>
+                </svg>
+                <span data-i18n="encryption.decrypt">Decrypt</span>
+              </button>
+            </div>
+            
+            <div class="beginner-tip" id="tip-encryption">
+              <span data-i18n="tips.encryption">🔒 Add invisible watermarks to protect your files</span>
+            </div>
+
+            
+            <!-- Advanced Actions -->
+            <div class="advanced-actions">
+              <button type="button" class="btn-action btn-danger" id="remove-watermarks-btn" disabled>
+                <svg class="icon-action" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clip-rule="evenodd"/>
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.236 4.53L8.04 10.48a.75.75 0 00-1.08 1.04l2.5 2.5a.75.75 0 001.146-.125l3.5-4.5z" clip-rule="evenodd"/>
+                </svg>
+                <span data-i18n="watermarks.remove_all">Clean All</span>
+              </button>
+              
+              <button type="button" class="btn-action btn-accent" id="watermark-settings-btn" disabled>
+                <svg class="icon-action" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                </svg>
+                <span data-i18n="watermarks.settings">Add Watermark</span>
+              </button>
+              
+              <button type="button" class="btn-action btn-gradient" id="batch-setup-btn" disabled>
+                <svg class="icon-action" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
+                </svg>
+                <span data-i18n="batch.setup">Batch Process</span>
+              </button>
+            </div>
+            
+            <div class="beginner-tip" id="tip-advanced">
+              <span data-i18n="tips.advanced">⚡ Advanced tools for power users</span>
+            </div>
+          </div>
+        </div>
       </aside>
 
       <!-- Main Content Area -->
@@ -172,23 +189,49 @@
         <!-- Console Panel -->
         <section class="console-panel">
           <header class="panel-header">
-            <h2 class="panel-title">Console Output</h2>
+            <h2 class="panel-title" data-i18n="console.title">Console Output</h2>
             <div class="panel-controls">
               <label class="option option-sm">
                 <input type="checkbox" id="auto-clear-console" class="checkbox" checked />
-                <span class="option-text">Auto-clear</span>
+                <span class="option-text" data-i18n="console.auto_clear">Auto-clear</span>
               </label>
               <button type="button" class="btn btn-ghost btn-sm" id="clear-console-btn">
                 <svg class="btn-icon" viewBox="0 0 24 24">
                   <polyline points="3,6 5,6 21,6"/>
                   <path d="m19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"/>
                 </svg>
-                Clear
+                <span data-i18n="console.clear">Clear</span>
               </button>
             </div>
           </header>
           <div class="console-container">
-            <div class="console-output" id="console-output"></div>
+            <div class="console-output" id="console-output">
+              <div class="console-welcome" id="console-welcome">
+                <div class="welcome-message">
+                  <span data-i18n="console.welcome">👋 Welcome to ENDEcode! Select a folder to get started.</span>
+                </div>
+                <div class="feature-preview" id="feature-preview">
+                  <div class="preview-item">
+                    <svg class="preview-icon" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zM3 6V3a5 5 0 0 1 10 0v3a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/>
+                    </svg>
+                    <span data-i18n="console.features.encrypt">Encrypt files with invisible watermarks</span>
+                  </div>
+                  <div class="preview-item">
+                    <svg class="preview-icon" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                    </svg>
+                    <span data-i18n="console.features.watermark">Add visible watermarks to images</span>
+                  </div>
+                  <div class="preview-item">
+                    <svg class="preview-icon" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.66 0 3.21.45 4.55 1.24"/>
+                    </svg>
+                    <span data-i18n="console.features.batch">Process multiple files at once</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="progress-container">
             <div class="progress-bar" id="progress-bar">
@@ -197,6 +240,273 @@
         </div>
       </section>
     </main>
+        </div>
+    </div>
+
+      <!-- Settings App Content -->
+      <div id="settings-app" class="app-view">
+        <div class="settings-layout">
+          <header class="settings-header">
+            <div style="display:flex; align-items:center; gap: var(--space-3);">
+              <button class="back-btn" id="back-to-main-btn" aria-label="Back to main">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 12H5m7-7l-7 7 7 7"/>
+                </svg>
+                <span>Back</span>
+              </button>
+              <h1 data-i18n="settings.title">Settings</h1>
+            </div>
+          </header>
+
+          <div class="settings-content">
+            <!-- General Settings -->
+            <section class="settings-section">
+              <h2 data-i18n="settings.general.title">General</h2>
+              <div class="settings-group">
+                <label class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label" data-i18n="settings.general.language">Language</span>
+                    <span class="setting-description" data-i18n="settings.general.language_desc">Choose your preferred language</span>
+                  </div>
+                  <select class="setting-control" id="language-select">
+                    <option value="en">English</option>
+                    <option value="ru">Русский</option>
+                    <option value="es">Español</option>
+                  </select>
+                </label>
+
+                <label class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label" data-i18n="settings.general.theme">Theme</span>
+                    <span class="setting-description" data-i18n="settings.general.theme_desc">Light or dark appearance</span>
+                  </div>
+                  <select class="setting-control" id="theme-select">
+                    <option value="system" data-i18n="settings.general.theme_system">System</option>
+                    <option value="light" data-i18n="settings.general.theme_light">Light</option>
+                    <option value="dark" data-i18n="settings.general.theme_dark">Dark</option>
+                  </select>
+                </label>
+
+                <label class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label" data-i18n="settings.general.tips">Show Beginner Tips</span>
+                    <span class="setting-description" data-i18n="settings.general.tips_desc">Display helpful hints for new users</span>
+                  </div>
+                  <input type="checkbox" class="setting-control checkbox-switch" id="show-tips" checked />
+                </label>
+
+                <label class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label" data-i18n="settings.general.auto_clear">Auto Clear Console</span>
+                    <span class="setting-description" data-i18n="settings.general.auto_clear_desc">Automatically clear console before new operations</span>
+                  </div>
+                  <input type="checkbox" class="setting-control checkbox-switch" id="auto-clear-setting" checked />
+                </label>
+              </div>
+            </section>
+
+            <!-- File Processing Settings -->
+            <section class="settings-section">
+              <h2 data-i18n="settings.processing.title">File Processing</h2>
+              <div class="settings-group">
+                <label class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label" data-i18n="settings.processing.default_watermark">Default Watermark Text</span>
+                    <span class="setting-description" data-i18n="settings.processing.default_watermark_desc">Text to use when watermark field is empty</span>
+                  </div>
+                  <input type="text" class="setting-control" id="default-watermark" placeholder="My Watermark" />
+                </label>
+
+                <label class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label" data-i18n="settings.processing.file_types">Supported File Types</span>
+                    <span class="setting-description" data-i18n="settings.processing.file_types_desc">Currently supported: txt, jpg, jpeg, png, mp4, avi, mov, mkv</span>
+                  </div>
+                  <div class="file-types-display">
+                    <span class="file-type-tag">TXT</span>
+                    <span class="file-type-tag">JPG</span>
+                    <span class="file-type-tag">PNG</span>
+                    <span class="file-type-tag">MP4</span>
+                    <span class="file-type-tag">AVI</span>
+                    <span class="file-type-tag">MOV</span>
+                    <span class="file-type-tag">MKV</span>
+                  </div>
+                </label>
+              </div>
+            </section>
+
+            <!-- Advanced Settings -->
+            <section class="settings-section">
+              <h2 data-i18n="settings.advanced.title">Advanced</h2>
+              <div class="settings-group">
+                <label class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label" data-i18n="settings.advanced.debug">Debug Mode</span>
+                    <span class="setting-description" data-i18n="settings.advanced.debug_desc">Enable detailed logging for troubleshooting</span>
+                  </div>
+                  <input type="checkbox" class="setting-control checkbox-switch" id="debug-mode" />
+                </label>
+
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label" data-i18n="settings.advanced.reset">Reset to Defaults</span>
+                    <span class="setting-description" data-i18n="settings.advanced.reset_desc">Restore all settings to their default values</span>
+                  </div>
+                  <button type="button" class="btn btn-danger btn-sm" id="reset-settings-btn">
+                    <span data-i18n="settings.advanced.reset_button">Reset</span>
+                  </button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- Modal: Batch Setup -->
+    <div class="modal-overlay" id="batch-modal">
+      <div class="modal-content">
+        <header class="modal-header">
+          <h2 data-i18n="modals.batch.title">Batch Operation Setup</h2>
+          <button type="button" class="modal-close" id="batch-modal-close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </header>
+        <div class="modal-body">
+          <form id="batch-form-modal">
+            <div class="form-group">
+              <label for="batch-base-text-modal" data-i18n="modals.batch.base_text">Base Text</label>
+              <input type="text" id="batch-base-text-modal" placeholder="Project_001" class="form-input" required />
+              <small class="form-help" data-i18n="modals.batch.base_text_help">This will be the base name for all copies. Numbers will be added automatically.</small>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="batch-num-copies-modal" data-i18n="modals.batch.num_copies">Number of Copies</label>
+                <input type="number" id="batch-num-copies-modal" value="1" min="1" max="100" class="form-input" required />
+              </div>
+              <div class="form-group">
+                <label for="batch-start-number" data-i18n="modals.batch.start_number">Starting Number</label>
+                <input type="number" id="batch-start-number" value="1" min="1" class="form-input" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label data-i18n="modals.batch.options">Options</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="checkbox" id="batch-add-swap-modal" />
+                  <span data-i18n="modals.batch.number_swap">Number Swap (+10)</span>
+                  <small data-i18n="modals.batch.number_swap_help">Swaps files with numbers N and N+10</small>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="batch-add-watermark-modal" />
+                  <span data-i18n="modals.batch.add_watermark">Add Visible Watermarks</span>
+                  <small data-i18n="modals.batch.add_watermark_help">Adds visible watermarks to images</small>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="batch-create-zip-modal" />
+                  <span data-i18n="modals.batch.create_zip">Create ZIP Archives</span>
+                  <small data-i18n="modals.batch.create_zip_help">Packages each copy into a ZIP file</small>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-row" id="watermark-options" style="display: none;">
+              <div class="form-group">
+                <label for="batch-watermark-text-modal" data-i18n="modals.batch.watermark_text">Watermark Text</label>
+                <input type="text" id="batch-watermark-text-modal" placeholder="Custom watermark..." class="form-input" />
+              </div>
+              <div class="form-group">
+                <label for="batch-photo-number-modal" data-i18n="modals.batch.photo_number">Photo Number</label>
+                <input type="number" id="batch-photo-number-modal" placeholder="1" min="1" class="form-input" />
+              </div>
+            </div>
+          </form>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-modal-close>
+            <span data-i18n="common.cancel">Cancel</span>
+          </button>
+          <button type="submit" form="batch-form-modal" class="btn btn-primary" id="batch-execute-btn">
+            <svg class="btn-icon" viewBox="0 0 16 16" fill="currentColor">
+              <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+            </svg>
+            <span data-i18n="modals.batch.execute">Execute Batch</span>
+          </button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Modal: Watermark Settings -->
+    <div class="modal-overlay" id="watermark-modal">
+      <div class="modal-content">
+        <header class="modal-header">
+          <h2 data-i18n="modals.watermark.title">Watermark Settings</h2>
+          <button type="button" class="modal-close" id="watermark-modal-close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </header>
+        <div class="modal-body">
+          <form id="watermark-form-modal">
+            <div class="form-group">
+              <label for="visible-watermark-text-modal" data-i18n="modals.watermark.text">Watermark Text</label>
+              <input type="text" id="visible-watermark-text-modal" placeholder="My Watermark" class="form-input" required />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="watermark-photo-number-modal" data-i18n="modals.watermark.photo_number">Photo Number</label>
+                <input type="number" id="watermark-photo-number-modal" placeholder="1" min="1" class="form-input" required />
+              </div>
+              <div class="form-group">
+                <label for="watermark-position" data-i18n="modals.watermark.position">Position</label>
+                <select id="watermark-position" class="form-input">
+                  <option value="bottom-right" data-i18n="modals.watermark.position_br">Bottom Right</option>
+                  <option value="bottom-left" data-i18n="modals.watermark.position_bl">Bottom Left</option>
+                  <option value="top-right" data-i18n="modals.watermark.position_tr">Top Right</option>
+                  <option value="top-left" data-i18n="modals.watermark.position_tl">Top Left</option>
+                  <option value="center" data-i18n="modals.watermark.position_c">Center</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="watermark-size" data-i18n="modals.watermark.size">Size</label>
+                <select id="watermark-size" class="form-input">
+                  <option value="small" data-i18n="modals.watermark.size_small">Small</option>
+                  <option value="medium" data-i18n="modals.watermark.size_medium" selected>Medium</option>
+                  <option value="large" data-i18n="modals.watermark.size_large">Large</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="watermark-opacity" data-i18n="modals.watermark.opacity">Opacity</label>
+                <input type="range" id="watermark-opacity" min="10" max="100" value="50" class="form-range" />
+                <output for="watermark-opacity" id="opacity-value">50%</output>
+              </div>
+            </div>
+          </form>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-modal-close>
+            <span data-i18n="common.cancel">Cancel</span>
+          </button>
+          <button type="submit" form="watermark-form-modal" class="btn btn-primary" id="watermark-apply-btn">
+            <svg class="btn-icon" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M8.5 5.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3Z"/>
+            </svg>
+            <span data-i18n="modals.watermark.apply">Apply Watermark</span>
+          </button>
+        </footer>
+      </div>
     </div>
   </body>
 </html>
