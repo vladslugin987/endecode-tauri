@@ -105,6 +105,52 @@ class SettingsManager {
       this.resetToDefaults();
     });
 
+    // Console font size
+    const fontSizeSelect = document.getElementById('console-font-size') as HTMLSelectElement;
+    fontSizeSelect?.addEventListener('change', () => {
+      const fontSize = fontSizeSelect.value;
+      const consoleOutput = document.getElementById('console-output');
+      if (consoleOutput) consoleOutput.style.fontSize = `${fontSize}px`;
+      localStorage.setItem('console-font-size', fontSize);
+    });
+
+    // Max console entries
+    const maxEntriesSelect = document.getElementById('max-console-entries') as HTMLSelectElement;
+    maxEntriesSelect?.addEventListener('change', () => {
+      localStorage.setItem('max-console-entries', maxEntriesSelect.value);
+    });
+
+    // Animations toggle
+    const animationsCheckbox = document.getElementById('animations-enabled') as HTMLInputElement;
+    animationsCheckbox?.addEventListener('change', () => {
+      if (!animationsCheckbox.checked) {
+        document.documentElement.style.setProperty('--transition-fast', '0s');
+        document.documentElement.style.setProperty('--transition-normal', '0s');
+        document.documentElement.style.setProperty('--transition-slow', '0s');
+      } else {
+        document.documentElement.style.removeProperty('--transition-fast');
+        document.documentElement.style.removeProperty('--transition-normal');
+        document.documentElement.style.removeProperty('--transition-slow');
+      }
+      localStorage.setItem('animations-enabled', animationsCheckbox.checked.toString());
+    });
+
+    // Compact mode
+    const compactModeCheckbox = document.getElementById('compact-mode') as HTMLInputElement;
+    compactModeCheckbox?.addEventListener('change', () => {
+      document.body.classList.toggle('compact-mode', compactModeCheckbox.checked);
+      localStorage.setItem('compact-mode', compactModeCheckbox.checked.toString());
+    });
+
+    // Clear cache
+    const clearCacheBtn = document.getElementById('clear-cache-btn');
+    clearCacheBtn?.addEventListener('click', () => {
+      const prefs = localStorage.getItem('endecode_extended_preferences');
+      localStorage.clear();
+      if (prefs) localStorage.setItem('endecode_extended_preferences', prefs);
+      consoleManager.success('Cache cleared!');
+    });
+
     // Listen for language changes
     window.addEventListener('languageChanged', () => {
       this.updateLanguageSelect();
@@ -172,6 +218,36 @@ class SettingsManager {
       this.debugModeCheckbox.checked = preferences.debug_mode;
     }
 
+    // Console font size
+    const savedFontSize = localStorage.getItem('console-font-size') || '12';
+    const fontSizeSelect = document.getElementById('console-font-size') as HTMLSelectElement;
+    if (fontSizeSelect) {
+      fontSizeSelect.value = savedFontSize;
+      const consoleOutput = document.getElementById('console-output');
+      if (consoleOutput) consoleOutput.style.fontSize = `${savedFontSize}px`;
+    }
+
+    // Max console entries
+    const savedMaxEntries = localStorage.getItem('max-console-entries') || '1000';
+    const maxEntriesSelect = document.getElementById('max-console-entries') as HTMLSelectElement;
+    if (maxEntriesSelect) maxEntriesSelect.value = savedMaxEntries;
+
+    // Animations
+    const animationsEnabled = localStorage.getItem('animations-enabled') !== 'false';
+    const animationsCheckbox = document.getElementById('animations-enabled') as HTMLInputElement;
+    if (animationsCheckbox) animationsCheckbox.checked = animationsEnabled;
+    if (!animationsEnabled) {
+      document.documentElement.style.setProperty('--transition-fast', '0s');
+      document.documentElement.style.setProperty('--transition-normal', '0s');
+      document.documentElement.style.setProperty('--transition-slow', '0s');
+    }
+
+    // Compact mode
+    const compactMode = localStorage.getItem('compact-mode') === 'true';
+    const compactModeCheckbox = document.getElementById('compact-mode') as HTMLInputElement;
+    if (compactModeCheckbox) compactModeCheckbox.checked = compactMode;
+    if (compactMode) document.body.classList.add('compact-mode');
+
     // Apply current settings
     this.applyTheme();
     this.toggleBeginnerTips();
@@ -184,7 +260,7 @@ class SettingsManager {
       auto_clear_console: this.autoClearCheckbox?.checked || true,
       last_selected_path: stateManager.getSelectedPath() || undefined,
       language: this.languageSelect?.value || 'en',
-      show_beginner_tips: this.showTipsCheckbox?.checked || true,
+      show_beginner_tips: this.showTipsCheckbox?.checked || false,
       default_watermark_text: this.defaultWatermarkInput?.value || '',
       debug_mode: this.debugModeCheckbox?.checked || false
     };
@@ -196,8 +272,8 @@ class SettingsManager {
     const defaultPrefs: ExtendedPreferences = {
       theme_mode: 'system',
       auto_clear_console: true,
-      language: 'en',
-      show_beginner_tips: true,
+      language: 'ru', // Исправлено: по умолчанию русский
+      show_beginner_tips: false,
       default_watermark_text: '',
       debug_mode: false
     };
@@ -288,7 +364,7 @@ class SettingsManager {
   }
 
   isBeginnerTipsEnabled(): boolean {
-    return this.showTipsCheckbox?.checked || true;
+      return this.showTipsCheckbox?.checked || false;
   }
 
   isDebugModeEnabled(): boolean {

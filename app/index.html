@@ -73,7 +73,7 @@
               <span data-i18n="workspace.select_folder">Select Folder</span>
             </button>
             
-            <div class="beginner-tip" id="tip-select-folder">
+              <div class="beginner-tip" id="tip-select-folder" style="display: none;">
               <span data-i18n="tips.select_folder">👋 Start here! Choose the folder with files you want to protect with watermarks.</span>
             </div>
             
@@ -107,7 +107,7 @@
                   </button>
                 </div>
               </form>
-              <div class="beginner-tip" id="tip-quick-test">
+              <div class="beginner-tip" id="tip-quick-test" style="display: none;">
                 <span data-i18n="tips.quick_test">🧪 Test how text gets encoded. Try typing "Hello123" and see the magic!</span>
               </div>
             </div>
@@ -147,7 +147,7 @@
               </button>
             </div>
             
-            <div class="beginner-tip" id="tip-encryption">
+            <div class="beginner-tip" id="tip-encryption" style="display: none;">
               <span data-i18n="tips.encryption">🔒 Add invisible watermarks to protect your files</span>
             </div>
 
@@ -177,7 +177,7 @@
               </button>
             </div>
             
-            <div class="beginner-tip" id="tip-advanced">
+            <div class="beginner-tip" id="tip-advanced" style="display: none;">
               <span data-i18n="tips.advanced">⚡ Advanced tools for power users</span>
             </div>
           </div>
@@ -191,16 +191,44 @@
           <header class="panel-header">
             <h2 class="panel-title" data-i18n="console.title">Console Output</h2>
             <div class="panel-controls">
+              <!-- Filter -->
+              <select class="console-filter-select" id="console-filter">
+                <option value="all">All Logs</option>
+                <option value="info">ℹ️ Info</option>
+                <option value="success">✓ Success</option>
+                <option value="warning">⚠ Warning</option>
+                <option value="error">✖ Error</option>
+              </select>
+              
+              <!-- Copy -->
+              <button type="button" class="btn btn-ghost btn-sm" id="copy-logs-btn" title="Copy logs" style="padding: 0 8px;">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+              
+              <!-- Download -->
+              <button type="button" class="btn btn-ghost btn-sm" id="download-logs-btn" title="Download logs" style="padding: 0 8px;">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+              </button>
+              
+              <!-- Auto-clear -->
               <label class="option option-sm">
                 <input type="checkbox" id="auto-clear-console" class="checkbox" checked />
-                <span class="option-text" data-i18n="console.auto_clear">Auto-clear</span>
+                <span class="option-text">Auto</span>
               </label>
+              
+              <!-- Clear -->
               <button type="button" class="btn btn-ghost btn-sm" id="clear-console-btn">
                 <svg class="btn-icon" viewBox="0 0 24 24">
                   <polyline points="3,6 5,6 21,6"/>
                   <path d="m19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"/>
                 </svg>
-                <span data-i18n="console.clear">Clear</span>
               </button>
             </div>
           </header>
@@ -261,7 +289,13 @@
           <div class="settings-content">
             <!-- General Settings -->
             <section class="settings-section">
-              <h2 data-i18n="settings.general.title">General</h2>
+              <div class="settings-section-header">
+                <svg class="settings-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24"/>
+                </svg>
+                <h2 data-i18n="settings.general.title">General</h2>
+              </div>
               <div class="settings-group">
                 <label class="setting-item">
                   <div class="setting-info">
@@ -292,7 +326,7 @@
                     <span class="setting-label" data-i18n="settings.general.tips">Show Beginner Tips</span>
                     <span class="setting-description" data-i18n="settings.general.tips_desc">Display helpful hints for new users</span>
                   </div>
-                  <input type="checkbox" class="setting-control checkbox-switch" id="show-tips" checked />
+                  <input type="checkbox" class="setting-control checkbox-switch" id="show-tips" />
                 </label>
 
                 <label class="setting-item">
@@ -302,12 +336,46 @@
                   </div>
                   <input type="checkbox" class="setting-control checkbox-switch" id="auto-clear-setting" checked />
                 </label>
+
+                <div class="settings-divider"></div>
+
+                <label class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label">Console Font Size</span>
+                    <span class="setting-description">Adjust console text size for better readability</span>
+                  </div>
+                  <select class="setting-control" id="console-font-size">
+                    <option value="11">Small (11px)</option>
+                    <option value="12" selected>Medium (12px)</option>
+                    <option value="13">Large (13px)</option>
+                    <option value="14">Extra Large (14px)</option>
+                  </select>
+                </label>
+
+                <label class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label">Max Console Entries</span>
+                    <span class="setting-description">Maximum number of log entries to keep (older entries auto-deleted)</span>
+                  </div>
+                  <select class="setting-control" id="max-console-entries">
+                    <option value="500">500 entries</option>
+                    <option value="1000" selected>1000 entries</option>
+                    <option value="2000">2000 entries</option>
+                    <option value="5000">5000 entries</option>
+                  </select>
+                </label>
               </div>
             </section>
 
             <!-- File Processing Settings -->
             <section class="settings-section">
-              <h2 data-i18n="settings.processing.title">File Processing</h2>
+              <div class="settings-section-header">
+                <svg class="settings-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                  <polyline points="13 2 13 9 20 9"/>
+                </svg>
+                <h2 data-i18n="settings.processing.title">File Processing</h2>
+              </div>
               <div class="settings-group">
                 <label class="setting-item">
                   <div class="setting-info">
@@ -317,10 +385,34 @@
                   <input type="text" class="setting-control" id="default-watermark" placeholder="My Watermark" />
                 </label>
 
+                <div class="settings-divider"></div>
+
+                <label class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label">Auto-save Logs</span>
+                    <span class="setting-description">Automatically save logs to file after operations</span>
+                  </div>
+                  <input type="checkbox" class="setting-control checkbox-switch" id="auto-save-logs" />
+                </label>
+
+                <label class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label">Export Format</span>
+                    <span class="setting-description">Preferred format for exporting logs</span>
+                  </div>
+                  <select class="setting-control" id="export-format">
+                    <option value="txt" selected>Text (.txt)</option>
+                    <option value="json">JSON (.json)</option>
+                    <option value="csv">CSV (.csv)</option>
+                  </select>
+                </label>
+
+                <div class="settings-divider"></div>
+
                 <label class="setting-item">
                   <div class="setting-info">
                     <span class="setting-label" data-i18n="settings.processing.file_types">Supported File Types</span>
-                    <span class="setting-description" data-i18n="settings.processing.file_types_desc">Currently supported: txt, jpg, jpeg, png, mp4, avi, mov, mkv</span>
+                    <span class="setting-description" data-i18n="settings.processing.file_types_desc">Currently supported formats</span>
                   </div>
                   <div class="file-types-display">
                     <span class="file-type-tag">TXT</span>
@@ -337,7 +429,12 @@
 
             <!-- Advanced Settings -->
             <section class="settings-section">
-              <h2 data-i18n="settings.advanced.title">Advanced</h2>
+              <div class="settings-section-header">
+                <svg class="settings-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                </svg>
+                <h2 data-i18n="settings.advanced.title">Advanced</h2>
+              </div>
               <div class="settings-group">
                 <label class="setting-item">
                   <div class="setting-info">
@@ -347,13 +444,41 @@
                   <input type="checkbox" class="setting-control checkbox-switch" id="debug-mode" />
                 </label>
 
+                <label class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label">Animations</span>
+                    <span class="setting-description">Enable smooth animations and transitions</span>
+                  </div>
+                  <input type="checkbox" class="setting-control checkbox-switch" id="animations-enabled" checked />
+                </label>
+
+                <label class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label">Compact Mode</span>
+                    <span class="setting-description">Reduce spacing and padding for smaller screens</span>
+                  </div>
+                  <input type="checkbox" class="setting-control checkbox-switch" id="compact-mode" />
+                </label>
+
+                <div class="settings-divider"></div>
+
                 <div class="setting-item">
                   <div class="setting-info">
                     <span class="setting-label" data-i18n="settings.advanced.reset">Reset to Defaults</span>
                     <span class="setting-description" data-i18n="settings.advanced.reset_desc">Restore all settings to their default values</span>
                   </div>
                   <button type="button" class="btn btn-danger btn-sm" id="reset-settings-btn">
-                    <span data-i18n="settings.advanced.reset_button">Reset</span>
+                    <span data-i18n="settings.advanced.reset_button">Reset All</span>
+                  </button>
+                </div>
+
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <span class="setting-label">Clear Cache</span>
+                    <span class="setting-description">Clear all cached data and temporary files</span>
+                  </div>
+                  <button type="button" class="btn btn-secondary btn-sm" id="clear-cache-btn">
+                    Clear Cache
                   </button>
                 </div>
               </div>

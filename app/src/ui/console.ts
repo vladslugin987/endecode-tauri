@@ -7,6 +7,7 @@ class ConsoleManager {
   private consoleElement: HTMLElement | null = null;
   private entries: LogEntry[] = [];
   private maxEntries = 1000;
+  private currentFilter: string = 'all';
 
   initialize(): void {
     this.consoleElement = document.getElementById('console-output');
@@ -35,6 +36,32 @@ class ConsoleManager {
       });
     }
 
+    // Filter dropdown
+    const filterSelect = document.getElementById('console-filter') as HTMLSelectElement;
+    if (filterSelect) {
+      filterSelect.addEventListener('change', (e) => {
+        const target = e.target as HTMLSelectElement;
+        this.currentFilter = target.value;
+        this.applyFilter();
+      });
+    }
+
+    // Copy logs button
+    const copyButton = document.getElementById('copy-logs-btn');
+    if (copyButton) {
+      copyButton.addEventListener('click', () => {
+        this.copyLogs();
+      });
+    }
+
+    // Download logs button
+    const downloadButton = document.getElementById('download-logs-btn');
+    if (downloadButton) {
+      downloadButton.addEventListener('click', () => {
+        this.downloadLogs();
+      });
+    }
+
     // Listen for working status changes to auto-clear
     stateManager.onWorkingStatusChanged((status) => {
       if (status.isWorking && stateManager.getPreferences().auto_clear_console) {
@@ -53,8 +80,8 @@ class ConsoleManager {
       <div class="console-welcome">
         <div class="console-header">
           ╭${line}╮
-          │ ${title.padStart((title.length + 38) / 2).padEnd(53)} │
-          │ ${subtitle.padStart((subtitle.length + 40) / 2).padEnd(53)} │
+          │ ${title.padStart((title.length + 38) / 2).padEnd(50)} │
+          │ ${subtitle.padStart((subtitle.length + 40) / 2).padEnd(50)} │
           ╰${line}╯
         </div>
         <div class="console-info">Ready to process files...</div>
@@ -115,24 +142,27 @@ class ConsoleManager {
       second: '2-digit'
     });
 
-    const icons = {
-      info: '🔷',
-      success: '✅',
-      error: '❌',
-      warning: '⚠️'
-    };
-
-    const icon = icons[entry.type];
-
-    const entryHtml = `
-      <div class="console-entry console-${entry.type}">
-        <span class="console-timestamp">[${timestamp}]</span>
-        <span class="console-icon">${icon}</span>
-        <span class="console-message">${this.escapeHtml(entry.message)}</span>
-      </div>
+    // Create element with animation
+    const entryDiv = document.createElement('div');
+    entryDiv.className = `console-entry console-${entry.type}`;
+    entryDiv.style.opacity = '0';
+    entryDiv.style.transform = 'translateY(10px)';
+    entryDiv.dataset.type = entry.type; // For filtering
+    
+    entryDiv.innerHTML = `
+      <span class="console-timestamp">[${timestamp}]</span>
+      <span class="console-icon"></span>
+      <span class="console-message">${this.escapeHtml(entry.message)}</span>
     `;
-
-    this.consoleElement.insertAdjacentHTML('beforeend', entryHtml);
+    
+    this.consoleElement.appendChild(entryDiv);
+    
+    // Animate entry appearance
+    requestAnimationFrame(() => {
+      entryDiv.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      entryDiv.style.opacity = '1';
+      entryDiv.style.transform = 'translateY(0)';
+    });
   }
 
   private escapeHtml(text: string): string {
@@ -195,6 +225,55 @@ class ConsoleManager {
       const timestamp = entry.timestamp.toISOString();
       return `[${timestamp}] ${entry.type.toUpperCase()}: ${entry.message}`;
     }).join('\n');
+  }
+
+  // Filter logs by type
+  private applyFilter(): void {
+    if (!this.consoleElement) return;
+    
+    const entries = this.consoleElement.querySelectorAll('.console-entry');
+    entries.forEach((entry) => {
+      const htmlEntry = entry as HTMLElement;
+      const type = htmlEntry.dataset.type;
+      
+      if (this.currentFilter === 'all' || type === this.currentFilter) {
+        htmlEntry.style.display = 'flex';
+      } else {
+        htmlEntry.style.display = 'none';
+      }
+    });
+  }
+
+  // Copy all logs to clipboard
+  private copyLogs(): void {
+    const text = this.entries.map(entry => {
+      const timestamp = entry.timestamp.toLocaleTimeString('ru-RU');
+      return `[${timestamp}] [${entry.type.toUpperCase()}] ${entry.message}`;
+    }).join('\n');
+
+    navigator.clipboard.writeText(text).then(() => {
+      this.success('Logs copied to clipboard!');
+    }).catch(() => {
+      this.error('Failed to copy logs');
+    });
+  }
+
+  // Download logs as text file
+  private downloadLogs(): void {
+    const text = this.entries.map(entry => {
+      const timestamp = entry.timestamp.toISOString();
+      return `[${timestamp}] [${entry.type.toUpperCase()}] ${entry.message}`;
+    }).join('\n');
+
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `endecode-logs-${new Date().toISOString().replace(/[:.]/g, '-')}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    this.success('Logs downloaded!');
   }
 }
 
